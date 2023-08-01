@@ -1,3 +1,6 @@
+imports:
+  commons: commons.yml
+
 service:
   auth: true
   base-path: /note

@@ -1,3 +1,6 @@
+imports:
+  commons: commons.yml
+
 service:
   auth: false
   base-path: /user
@@ -10,6 +13,7 @@ service:
       response: MessageOK
       errors:
         - EmailAlreadyExists
+        - commons.BadRequestError
     login:
       docs: Authenticate user based on credential and return token
       method: POST

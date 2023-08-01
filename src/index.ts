@@ -1,8 +1,10 @@
 import cors from "cors"
 import express from "express";
-import { register } from "./api";
+import {register} from "./api";
 import note from "./services/note"
 import user from "./services/user"
+import {StartDB} from "./sequelize/db";
+
 const PORT = process.env.PORT ?? 8080;
 
 const app = express();
@@ -14,5 +16,7 @@ register(app, {
     user,
 });
 
-app.listen(PORT);
-console.log(`🎉 Listening on port ${PORT}...`);
+StartDB().then(() => {
+    app.listen(PORT)
+    console.log(`🎉 Listening on port ${PORT}...`);
+})
