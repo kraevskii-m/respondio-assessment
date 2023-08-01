@@ -1,0 +1,61 @@
+service:
+  auth: false
+  base-path: /user
+  endpoints:
+    register:
+      docs: Accept user details and create a new user account in the database
+      method: POST
+      path: /register
+      request: RegisterUserRequest
+      response: MessageOK
+      errors:
+        - EmailAlreadyExists
+    login:
+      docs: Authenticate user based on credential and return token
+      method: POST
+      path: /login
+      request: LoginUserRequest
+      response: TokenResponse
+      errors:
+        - WrongCredentials
+
+types:
+  MessageOK:
+    properties:
+      success: boolean
+  RegisterUserRequest:
+    properties:
+      firstName:
+        type: string
+        docs: User first name
+      lastName:
+        type: string
+        docs: User last name
+      email:
+        type: string
+        docs: User email
+      password:
+        type: string
+        docs: User password
+  LoginUserRequest:
+    properties:
+      email:
+        type: string
+        docs: User email
+      password:
+        type: string
+        docs: User password
+  TokenResponse:
+    properties:
+      accessToken:
+        type: string
+        docs: Access token
+      tokenType:
+        type: string
+        docs: Token type
+
+errors:
+  EmailAlreadyExists:
+    status-code: 409
+  WrongCredentials:
+    status-code: 400

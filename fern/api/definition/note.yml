@@ -1,0 +1,27 @@
+service:
+  auth: true
+  base-path: /note
+  endpoints:
+    create:
+      docs: Accept note details and create new note
+      method: POST
+      path: /create
+      request: Note
+      response: CreateNoteResponse
+
+types:
+  NoteType:
+    enum:
+      - Personal
+      - Work
+      - Family
+      - Hobby
+  Note:
+    properties:
+      title: string
+      text: string
+      noteType: NoteType
+  CreateNoteResponse:
+    extends: Note
+    properties:
+      id: integer
