@@ -6,7 +6,8 @@
   "packageManager": "^pnpm@8.6.5",
   "scripts": {
     "codegen": "fern generate",
-    "start": "dotenv -- ts-node ./src"
+    "start": "dotenv -- ts-node ./src",
+    "sync-db": "dotenv -- ts-node sync-db.ts"
   },
   "keywords": [],
   "author": "Mikhail Kraevskii",
@@ -28,9 +29,10 @@
     "@types/cors": "^2.8.13",
     "@types/crypto-js": "^4.1.1",
     "@types/express": "^4.17.17",
-    "@types/node": "^20.4.5",
     "@types/jsonwebtoken": "^9.0.2",
-    "sequelize-cli": "^6.6.1",
-    "typescript": "^5.1.6"
+    "@types/node": "^20.4.5",
+    "@types/umzug": "^2.3.3",
+    "typescript": "^5.1.6",
+    "umzug": "^3.2.1"
   }
 }
