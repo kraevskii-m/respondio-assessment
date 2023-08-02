@@ -52,23 +52,20 @@ User.init({
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            validate: {
-                len: {
-                    args: [1, 30],
-                    msg: "Password length is not correct"
-                }
+            len: {
+                args: [1, 129],
+                msg: "Password length is not correct"
             }
+
         }
     },
     salt: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            validate: {
-                len: {
-                    args: [1, 30],
-                    msg: "Salt length is not correct"
-                }
+            len: {
+                args: [1, 100],
+                msg: "Salt length is not correct"
             }
         }
     }

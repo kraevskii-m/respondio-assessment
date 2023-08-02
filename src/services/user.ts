@@ -53,7 +53,9 @@ export default new UserService({
         if (!valid) {
             throw new BadRequestError()
         }
-        const {hash, salt} = sha512(req.body.password, generateSalt())
+        const password = req.body.password
+        const salt = generateSalt(password.length)
+        const {hash} = sha512(password, salt)
 
         try {
             await User.create({

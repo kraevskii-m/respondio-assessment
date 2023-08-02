@@ -12,7 +12,7 @@ sequelize.authenticate()
     .catch((err) => console.error('Unable to connect to the database:', err))
 
 const umzug = new Umzug({
-    migrations: { glob: 'migrations/*.js' },
+    migrations: { glob: 'src/storage/migrations/*.ts' },
     context: sequelize.getQueryInterface(),
     storage: new SequelizeStorage({ sequelize }),
     logger: console,
