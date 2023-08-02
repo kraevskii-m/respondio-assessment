@@ -9,8 +9,48 @@ service:
       docs: Accept note details and create new note
       method: POST
       path: /create
-      request: Note
-      response: CreateNoteResponse
+      request: CreateNoteRequest
+      response: Note
+      errors:
+        - commons.ServerError
+    all:
+      docs: Retrieve all notes
+      method: GET
+      path: /all
+      response: list<Note>
+      errors:
+        - commons.ServerError
+    single:
+      docs: Retrieve single note
+      method: GET
+      path: /{noteId}
+      path-parameters:
+        noteId: integer
+      response: Note
+      errors:
+        - commons.NotFound
+        - commons.ServerError
+    update:
+      docs: Accept note details and create new note
+      method: PUT
+      path: /update/{noteId}
+      path-parameters:
+        noteId: integer
+      request: UpdateNoteRequest
+      response: Note
+      errors:
+        - commons.NotFound
+        - commons.ServerError
+    delete:
+      docs: Delete single note
+      method: DELETE
+      path: /delete/{noteId}
+      path-parameters:
+        noteId: integer
+      response: commons.MessageOK
+      errors:
+        - commons.NotFound
+        - commons.ServerError
 
 types:
   NoteType:
@@ -19,12 +59,20 @@ types:
       - Work
       - Family
       - Hobby
-  Note:
+  CreateNoteRequest:
     properties:
       title: string
       text: string
       noteType: NoteType
-  CreateNoteResponse:
-    extends: Note
+  Note:
     properties:
       id: integer
+      title: string
+      text: string
+      noteType: NoteType
+  UpdateNoteRequest:
+    properties:
+      id: integer
+      title: optional<string>
+      text: optional<string>
+      noteType: optional<NoteType>

@@ -3,7 +3,7 @@ import express from "express";
 import {register} from "./api";
 import note from "./services/note"
 import user from "./services/user"
-import {StartDB} from "./sequelize/db";
+import {startDB} from "./storage/db";
 
 const PORT = process.env.PORT ?? 8080;
 
@@ -16,7 +16,7 @@ register(app, {
     user,
 });
 
-StartDB().then(() => {
+startDB().then(() => {
     app.listen(PORT)
     console.log(`🎉 Listening on port ${PORT}...`);
 })

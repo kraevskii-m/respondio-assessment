@@ -2,7 +2,7 @@ import {Sequelize} from "sequelize";
 import 'dotenv/config'
 
 export let sequelize: Sequelize;
-export const StartDB = async (): Promise<void> => {
+export const startDB = async (): Promise<void> => {
     if (!process.env.DB_URL) {
         throw new Error("No Sequelize config provided")
     }
@@ -14,3 +14,5 @@ export const StartDB = async (): Promise<void> => {
         console.error('Unable to connect to the database:', err)
     }
 }
+
+// export const syncDB = async ():

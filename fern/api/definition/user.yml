@@ -10,10 +10,10 @@ service:
       method: POST
       path: /register
       request: RegisterUserRequest
-      response: MessageOK
+      response: commons.MessageOK
       errors:
-        - EmailAlreadyExists
         - commons.BadRequestError
+        - commons.ServerError
     login:
       docs: Authenticate user based on credential and return token
       method: POST
@@ -22,11 +22,9 @@ service:
       response: TokenResponse
       errors:
         - WrongCredentials
+        - commons.ServerError
 
 types:
-  MessageOK:
-    properties:
-      success: boolean
   RegisterUserRequest:
     properties:
       firstName:
@@ -59,7 +57,5 @@ types:
         docs: Token type
 
 errors:
-  EmailAlreadyExists:
-    status-code: 409
   WrongCredentials:
     status-code: 400

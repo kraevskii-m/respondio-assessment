@@ -1,3 +1,12 @@
+types:
+  MessageOK:
+    properties:
+      success: boolean
+
 errors:
   BadRequestError:
     status-code: 400
+  NotFound:
+    status-code: 404
+  ServerError:
+    status-code: 500
