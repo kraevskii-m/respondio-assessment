@@ -13,6 +13,8 @@ import {BadRequestError} from "../api/generated/api";
 import {User} from "../storage/model/user";
 import {ValidationError} from "sequelize";
 import {generateSalt, sha512, validatePassword} from "./utils";
+import * as jwt from "jsonwebtoken";
+import 'dotenv/config'
 
 export default new UserService({
     async login(req: e.Request<never, TokenResponse, LoginUserRequest, never>, res: {
@@ -32,7 +34,15 @@ export default new UserService({
         if (!passwordCorrect) {
             throw new WrongCredentials()
         }
-        await res.send({accessToken: "token", tokenType: "bearer"}) //todo FIX
+        const SECRET_KEY = process.env.SECRET_KEY
+        if (!SECRET_KEY) {
+            throw new ServerError()
+        }
+        const token = jwt.sign({_id: user.id, name: user.email}, SECRET_KEY, {
+            expiresIn: '2 days',
+        });
+
+        await res.send({accessToken: token, tokenType: "bearer"})
     },
     async register(req: e.Request<never, MessageOk, RegisterUserRequest, never>, res: {
         send: (responseBody: MessageOk) => Promise<void>;
