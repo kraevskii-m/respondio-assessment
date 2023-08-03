@@ -1,5 +1,6 @@
 import {DataTypes, Model} from "sequelize";
 import {sequelize} from "../db";
+import {User} from "./user";
 
 enum NoteType {
     Personal,
@@ -13,6 +14,7 @@ export class Note extends Model {
     declare title: string;
     declare text: string;
     declare noteType: NoteType;
+    declare user_id: number;
 }
 
 
@@ -35,5 +37,12 @@ Note.init({
         defaultValue: "Personal",
         allowNull: false,
     },
+    user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: User,
+            key: 'id'
+        }
+    }
 }, {sequelize, timestamps: true});
 

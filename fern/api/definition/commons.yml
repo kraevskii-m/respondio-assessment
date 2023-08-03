@@ -10,3 +10,5 @@ errors:
     status-code: 404
   ServerError:
     status-code: 500
+  Forbidden:
+    status-code: 403

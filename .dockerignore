@@ -1,0 +1,14 @@
+node_modules
+data
+openapi
+postman
+.env
+.env.example
+git
+.idea
+.gitignore
+docker-compose.yml
+Makefile
+pnpm-lock.yaml
+README.md
+

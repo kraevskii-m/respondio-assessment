@@ -27,6 +27,13 @@ const up = async ({context: queryInterface}: { context: QueryInterface }) => {
         updatedAt: {
             type: DataTypes.DATE,
             allowNull: false
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "users",
+                key: 'id'
+            }
         }
     });
 }

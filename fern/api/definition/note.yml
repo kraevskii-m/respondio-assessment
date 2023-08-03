@@ -10,26 +10,29 @@ service:
       method: POST
       path: /create
       request: CreateNoteRequest
-      response: Note
+      response: NoteObject
       errors:
         - commons.ServerError
+        - commons.Forbidden
     all:
       docs: Retrieve all notes
       method: GET
       path: /all
-      response: list<Note>
+      response: list<NoteObject>
       errors:
         - commons.ServerError
+        - commons.Forbidden
     single:
       docs: Retrieve single note
       method: GET
-      path: /{noteId}
+      path: /get/{noteId}
       path-parameters:
         noteId: integer
-      response: Note
+      response: NoteObject
       errors:
         - commons.NotFound
         - commons.ServerError
+        - commons.Forbidden
     update:
       docs: Accept note details and create new note
       method: PUT
@@ -37,10 +40,11 @@ service:
       path-parameters:
         noteId: integer
       request: UpdateNoteRequest
-      response: Note
+      response: commons.MessageOK
       errors:
         - commons.NotFound
         - commons.ServerError
+        - commons.Forbidden
     delete:
       docs: Delete single note
       method: DELETE
@@ -51,6 +55,7 @@ service:
       errors:
         - commons.NotFound
         - commons.ServerError
+        - commons.Forbidden
 
 types:
   NoteType:
@@ -64,7 +69,7 @@ types:
       title: string
       text: string
       noteType: NoteType
-  Note:
+  NoteObject:
     properties:
       id: integer
       title: string
@@ -72,7 +77,6 @@ types:
       noteType: NoteType
   UpdateNoteRequest:
     properties:
-      id: integer
       title: optional<string>
       text: optional<string>
       noteType: optional<NoteType>

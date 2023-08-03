@@ -12,8 +12,7 @@ import validate from "deep-email-validator";
 import {BadRequestError} from "../api/generated/api";
 import {User} from "../storage/model/user";
 import {ValidationError} from "sequelize";
-import {generateSalt, sha512, validatePassword} from "./utils";
-import * as jwt from "jsonwebtoken";
+import {generateSalt, generateToken, sha512, validatePassword} from "./utils";
 import 'dotenv/config'
 
 export default new UserService({
@@ -34,13 +33,8 @@ export default new UserService({
         if (!passwordCorrect) {
             throw new WrongCredentials()
         }
-        const SECRET_KEY = process.env.SECRET_KEY
-        if (!SECRET_KEY) {
-            throw new ServerError()
-        }
-        const token = jwt.sign({_id: user.id, name: user.email}, SECRET_KEY, {
-            expiresIn: '2 days',
-        });
+
+        const token = generateToken({_id: user.id, name: user.email});
 
         await res.send({accessToken: token, tokenType: "bearer"})
     },

@@ -39,7 +39,7 @@ User.init({
     },
     email: {
         type: DataTypes.STRING,
-        unique: 'compositeIndex',
+        unique: true,
         allowNull: false,
         validate: {
             len: {
@@ -70,4 +70,3 @@ User.init({
         }
     }
 }, {sequelize, timestamps: true});
-

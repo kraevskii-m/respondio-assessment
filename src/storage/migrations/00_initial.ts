@@ -29,7 +29,7 @@ const up = async ({context: queryInterface}: { context: QueryInterface }) => {
         },
         email: {
             type: DataTypes.STRING,
-            unique: 'compositeIndex',
+            unique: true,
             allowNull: false,
             validate: {
                 len: {
