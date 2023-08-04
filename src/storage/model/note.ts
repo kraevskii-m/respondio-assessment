@@ -1,48 +1,49 @@
-import {DataTypes, Model} from "sequelize";
-import {sequelize} from "../db";
-import {User} from "./user";
+import { DataTypes, Model } from 'sequelize'
+import { sequelize } from '../db'
+import { User } from './user'
 
 enum NoteType {
-    Personal,
-    Work,
-    Family,
-    Hobby,
+  Personal,
+  Work,
+  Family,
+  Hobby,
 }
 
 export class Note extends Model {
-    declare id: number;
-    declare title: string;
-    declare text: string;
-    declare noteType: NoteType;
-    declare user_id: number;
+  declare id: number
+  declare title: string
+  declare text: string
+  declare noteType: NoteType
+  declare user_id: number
 }
 
-
-Note.init({
+Note.init(
+  {
     id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     title: {
-        type: DataTypes.STRING,
-        defaultValue: null
+      type: DataTypes.STRING,
+      defaultValue: null,
     },
     text: {
-        type: DataTypes.STRING,
-        defaultValue: null
+      type: DataTypes.STRING,
+      defaultValue: null,
     },
     noteType: {
-        type: DataTypes.ENUM("Personal", "Work", "Family", "Hobby"),
-        defaultValue: "Personal",
-        allowNull: false,
+      type: DataTypes.ENUM('Personal', 'Work', 'Family', 'Hobby'),
+      defaultValue: 'Personal',
+      allowNull: false,
     },
     user_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: User,
-            key: 'id'
-        }
-    }
-}, {sequelize, timestamps: true});
-
+      type: DataTypes.INTEGER,
+      references: {
+        model: User,
+        key: 'id',
+      },
+    },
+  },
+  { sequelize, timestamps: true },
+)

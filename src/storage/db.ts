@@ -1,23 +1,23 @@
-import {Sequelize} from "sequelize";
+import { Sequelize } from 'sequelize'
 import 'dotenv/config'
-import {SequelizeStorage, Umzug} from "umzug";
-
+import { SequelizeStorage, Umzug } from 'umzug'
 
 if (!process.env.DB_URL) {
-    throw new Error("No Sequelize config provided")
+  throw new Error('No Sequelize config provided')
 }
 export const sequelize = new Sequelize(process.env.DB_URL)
-sequelize.authenticate()
-    .then(() => console.log("Connection to DB successful"))
-    .catch((err) => console.error('Unable to connect to the database:', err))
+sequelize
+  .authenticate()
+  .then(() => console.log('Connection to DB successful'))
+  .catch(err => console.error('Unable to connect to the database:', err))
 
 const umzug = new Umzug({
-    migrations: { glob: 'src/storage/migrations/*.ts' },
-    context: sequelize.getQueryInterface(),
-    storage: new SequelizeStorage({ sequelize }),
-    logger: console,
+  migrations: { glob: 'src/storage/migrations/*.ts' },
+  context: sequelize.getQueryInterface(),
+  storage: new SequelizeStorage({ sequelize }),
+  logger: console,
 })
 
 export const runMigrations = async () => {
-    await umzug.up();
+  await umzug.up()
 }

@@ -1,3 +1,3 @@
-import {runMigrations} from "./src/storage/db";
+import { runMigrations } from './src/storage/db'
 
 runMigrations()
