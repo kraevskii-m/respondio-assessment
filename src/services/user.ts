@@ -11,7 +11,7 @@ import {
 import * as e from 'express'
 import validate from 'deep-email-validator'
 import { BadRequestError } from '../api/generated/api'
-import { User } from '../storage/model/user'
+import { User } from '../storage/db'
 import { ValidationError } from 'sequelize'
 import { generateSalt, generateToken, sha512, validatePassword } from './utils'
 import 'dotenv/config'

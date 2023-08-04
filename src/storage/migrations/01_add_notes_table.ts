@@ -34,6 +34,7 @@ const up = async ({ context: queryInterface }: { context: QueryInterface }) => {
         model: 'users',
         key: 'id',
       },
+      allowNull: false,
     },
   })
 }

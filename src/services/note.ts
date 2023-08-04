@@ -7,13 +7,12 @@ import {
   NoteObject,
   NotFound,
   ServerError,
-  UpdateNoteRequest,
+  UpdateNoteRequest
 } from '../api/generated/api'
 import * as e from 'express'
 import { decodeToken } from './utils'
-import { User } from '../storage/model/user'
+import { User, Note } from '../storage/db'
 import { ValidationError } from 'sequelize'
-import { Note } from '../storage/model/note'
 
 export default new NoteService({
   async all(
@@ -22,14 +21,14 @@ export default new NoteService({
       send: (responseBody: NoteObject[]) => Promise<void>
       cookie: (cookie: string, value: string, options?: e.CookieOptions) => void
       locals: any
-    },
+    }
   ): Promise<void> {
     const { id, email } = decodeToken(req.header('Authorization'))
     const user = await User.findOne({
       where: {
         id: id,
-        email: email,
-      },
+        email: email
+      }
     })
     if (!user) {
       throw new Forbidden()
@@ -37,8 +36,8 @@ export default new NoteService({
     try {
       const notes = await Note.findAll({
         where: {
-          user_id: user.id,
-        },
+          user_id: user.id
+        }
       })
       const output = notes.map((note: Note) => note.dataValues as NoteObject)
       await res.send(output)
@@ -55,14 +54,14 @@ export default new NoteService({
       send: (responseBody: MessageOk) => Promise<void>
       cookie: (cookie: string, value: string, options?: e.CookieOptions) => void
       locals: any
-    },
+    }
   ): Promise<void> {
     const { id, email } = decodeToken(req.header('Authorization'))
     const user = await User.findOne({
       where: {
         id: id,
-        email: email,
-      },
+        email: email
+      }
     })
     if (!user) {
       throw new Forbidden()
@@ -72,8 +71,8 @@ export default new NoteService({
       deletedNum = await Note.destroy({
         where: {
           id: req.params.noteId,
-          user_id: user.id,
-        },
+          user_id: user.id
+        }
       })
     } catch (error) {
       if (error instanceof ValidationError) {
@@ -92,14 +91,14 @@ export default new NoteService({
       send: (responseBody: NoteObject) => Promise<void>
       cookie: (cookie: string, value: string, options?: e.CookieOptions) => void
       locals: any
-    },
+    }
   ): Promise<void> {
     const { id, email } = decodeToken(req.header('Authorization'))
     const user = await User.findOne({
       where: {
         id: id,
-        email: email,
-      },
+        email: email
+      }
     })
     if (!user) {
       throw new Forbidden()
@@ -109,8 +108,8 @@ export default new NoteService({
       note = await Note.findOne({
         where: {
           id: req.params.noteId,
-          user_id: user.id,
-        },
+          user_id: user.id
+        }
       })
     } catch (error) {
       if (error instanceof ValidationError) {
@@ -130,14 +129,14 @@ export default new NoteService({
       send: (responseBody: MessageOk) => Promise<void>
       cookie: (cookie: string, value: string, options?: e.CookieOptions) => void
       locals: any
-    },
+    }
   ): Promise<void> {
     const { id, email } = decodeToken(req.header('Authorization'))
     const user = await User.findOne({
       where: {
         id: id,
-        email: email,
-      },
+        email: email
+      }
     })
     if (!user) {
       throw new Forbidden()
@@ -149,14 +148,14 @@ export default new NoteService({
           title: req.body.title,
           text: req.body.text,
           noteType: req.body.noteType,
-          user_id: user.id,
+          user_id: user.id
         },
         {
           where: {
             id: req.params.noteId,
-            user_id: id,
-          },
-        },
+            user_id: id
+          }
+        }
       )
       updatedNum = update[0]
     } catch (error) {
@@ -176,14 +175,14 @@ export default new NoteService({
       send: (responseBody: NoteObject) => Promise<void>
       cookie: (cookie: string, value: string, options?: e.CookieOptions) => void
       locals: any
-    },
+    }
   ): Promise<void> {
     const { id, email } = decodeToken(req.header('Authorization'))
     const user = await User.findOne({
       where: {
         id: id,
-        email: email,
-      },
+        email: email
+      }
     })
     if (!user) {
       throw new Forbidden()
@@ -193,7 +192,7 @@ export default new NoteService({
         title: req.body.title,
         text: req.body.text,
         noteType: req.body.noteType,
-        user_id: user.id,
+        user_id: user.id
       })
       const output = note.dataValues as NoteObject
       await res.send(output)
@@ -203,5 +202,5 @@ export default new NoteService({
       }
       throw new ServerError()
     }
-  },
+  }
 })
